@@ -1,0 +1,14 @@
+<div>
+    <div ng-if="currentQuestion.qtype === 'multiple'">
+      <multiple-choice question="currentQuestion" save="saveAnswer(id, answer)" answers="answers">
+      </multiple-choice>
+    </div>
+
+  <div ng-if="currentQuestion.qtype === 'blank'">
+    <h2> {{currentQuestion.title}}</h2>
+    <br />
+    <input type="text" placeholder="Your answer here" ng-model="answer" ng-keyup="handleEnter($event, answer)"/>
+    <br />
+    <button class="saveBtn" ng-click="saveAnswer(answer)"> Save and Continue </button>
+  </div>
+</div>

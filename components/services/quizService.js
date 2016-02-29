@@ -1,6 +1,5 @@
-angular.module('quizApp').service('quizService', function ($q) {
 
-  var quizSampleObj = {
+var quizSampleObj = {
         'html': {
             id: 1,
             name: 'HTML',
@@ -59,22 +58,42 @@ angular.module('quizApp').service('quizService', function ($q) {
         }
     };
 
-    this.getQuestions = function(quizName) {
-      var defer = $q.defer();
-      defer.resolve(quizSampleObj.angular.questions)
-      return defer.promise;
-    }
 
-    this.getQuizNames = function(){
-        var defer = $q.defer();
+    angular.module('quizApp').service('quizService', function ($q) {
 
-        defer.resolve([{
-            name: "Angular",
-        },{
-            name: "HTML",
-        }]);
+        this.getQuizNames = function () {
+            var defer = $q.defer();
 
-        return defer.promise;
-    }
+            defer.resolve([{
+                name: "Angular",
+            }, {
+                    name: "HTML",
+                }, {
+                    name: "Javascript",
+                }])
 
-});
+            return defer.promise;
+        }
+
+        this.getQuestions = function (quizName) {
+            var defer = $q.defer();
+
+            defer.resolve(quizSampleObj.angular.questions);
+
+            return defer.promise;
+        }
+
+        this.checkMyAnswers = function (questions, answers) {
+            var dfd = $q.defer();
+            var results = {
+                done: true
+            };
+            for (var i = 0; i < questions.length; i++) {
+                var isCorrect = questions[i].qtype === 'multiple' ? questions[i].choices[questions[i].correct] === answers[questions[i].id] : (questions[i].qtype === 'blank' ? questions[i].correct === answers[questions[i].id] : false)
+                results[questions[i].id] = isCorrect;
+            }
+            dfd.resolve(results);
+
+            return dfd.promise;
+        }
+    })

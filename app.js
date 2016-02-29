@@ -1,6 +1,6 @@
 angular.module('quizApp', ['ui.router'])
 
-.run(function ($rootScope, $state){
+  .run(function ($rootScope, $state){
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
            if(toState.name === 'quiz') {
                event.preventDefault();
@@ -9,7 +9,7 @@ angular.module('quizApp', ['ui.router'])
        })
    })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+   .config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
 
